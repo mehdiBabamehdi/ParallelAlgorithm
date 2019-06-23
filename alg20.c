@@ -13,8 +13,9 @@
 int main()
 {
    int N, arrayDim;
-   double *a; 	
-   printf("number of data= ");
+   double *a; 
+   double sum =0;   
+   printf("number of data (power of 2 e.g. 4,8,16,...)= ");
    scanf("%d", &arrayDim);
 
    N = (int)((log((double)arrayDim)) / log(2.0)) - 1;
@@ -26,8 +27,8 @@ int main()
    {
       
       *(a+i) = rand() % 20;
-      
-      printf("a= %f\n",*(a+i));
+      sum += *(a+i);
+      printf("a%d= %f\n",i,*(a+i));
  
    }
    
@@ -40,6 +41,7 @@ int main()
    }
 
    printf("result= %f\n", *a);
+   printf("result (correct)= %f\n",sum);
 
    return 0;
 }
