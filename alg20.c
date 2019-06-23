@@ -2,7 +2,7 @@
 
 /*
  * @name 	alg20.c
- * @brief	The code implements Alg20 of chapter 2 ofparallel algorithm course
+ * @brief	The code implements Alg20 of chapter 2 of course "parallel algorithm"
  * 
  */
 
@@ -25,7 +25,7 @@ int main()
    for (int i=0; i<arrayDim; i++)
    {
       
-      *(a+i) = 1.3;	//rand() * 2;
+      *(a+i) = rand() % 20;
       
       printf("a= %f\n",*(a+i));
  
