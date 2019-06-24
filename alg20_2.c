@@ -25,11 +25,9 @@ int main()
 
    for (int i=0; i<arrayDim; i++)
    {
-      
       *(a+i) = rand() % 20;
       sum += *(a+i);
       printf("a%d= %f\n",i,*(a+i));
- 
    }
    
    for (int k=0; k<=N; k++)
