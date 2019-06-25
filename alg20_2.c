@@ -9,39 +9,44 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
+
 
 int main()
 {
-   int N, arrayDim;
-   double *a; 
-   double sum =0;   
-   printf("number of data (power of 2 e.g. 4,8,16,...)= ");
-   scanf("%d", &arrayDim);
+   int numb_stage, arrayDim;
+   float *rand_numb; 
+   float sum =0;  
+   clock_t start_t;
+ 
+   printf("Enter number of stage, the total number of data would be 2^stage\n");
+   printf("numb_stage = "); 
+   scanf("%d", &numb_stage);
+   arrayDim = pow(2,numb_stage);
 
-   N = (int)((log((double)arrayDim)) / log(2.0)) - 1;
-
-   printf("Dimension of data = %d \n", N);
-   a = (double*) malloc(N * sizeof(double));
-
+   printf("numb_stageumber of data = %d \n", arrayDim);
+   rand_numb = (float*) malloc(numb_stage * sizeof(float));
+   
+   // initializing "rand_numb" with random nunber bewteen 0-19 and 
    for (int i=0; i<arrayDim; i++)
    {
-      
-      *(a+i) = rand() % 20;
-      sum += *(a+i);
-      printf("a%d= %f\n",i,*(a+i));
- 
+      *(rand_numb+i) = rand() % 20;
+      sum += *(rand_numb+i);
+    //  printf("rand_numb%d= %f\n",i,*(a+i));
    }
    
-   for (int k=0; k<=N; k++)
+   start_t = clock();
+   for (int k=0; k<=numb_stage; k++)
    {
-         for (int i=0; i<pow(2,(N-k)); i++)
+         for (int i=0; i<pow(2,(numb_stage-k)); i++)
      {
-        *(a+i) = *(a+2*i) + *(a+2*i+1);
+        *(rand_numb+i) = *(rand_numb+2*i) + *(rand_numb+2*i+1);
      }	     
    }
 
-   printf("result= %f\n", *a);
+   printf("Operation time= %f\n",(float)((clock() - start_t) / CLOCKS_PER_SEC));
+   printf("result= %f\n", *rand_numb);
    printf("result (correct)= %f\n",sum);
-
+   
    return 0;
 }
