@@ -30,15 +30,9 @@ int main()
    // initializing "rand_numb" with random nunber bewteen 0-19 and 
    for (int i=0; i<arrayDim; i++)
    {
-<<<<<<< HEAD
       *(rand_numb+i) = rand() % 20;
       sum += *(rand_numb+i);
     //  printf("rand_numb%d= %f\n",i,*(a+i));
-=======
-      *(a+i) = rand() % 20;
-      sum += *(a+i);
-      printf("a%d= %f\n",i,*(a+i));
->>>>>>> c2326a29447d76a65dec01e053104a7ad2cc5b3e
    }
    
    start_t = clock();
