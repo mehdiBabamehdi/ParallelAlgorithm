@@ -1,9 +1,13 @@
 
 
 /*
- * @name 	alg27.c
- * @brief	The code implements Alg27 of chapter 2 of course "parallel algorithm"
- * 
+ * @name 	 alg27_2p.c
+ * @brief	 The code implements Alg27 of chapter 2 of course "parallel algorithm"
+ * @author Mehdi
+ * @note   Number of processor should be a power of 2 e.g. 4,8,16,32, ...
+ *         To run the code with number of processor more than the processor availabe 
+ *            on your local machine, use flag
+ *                   --oversubscribe --use-hwthread-cpus 
  */
 
 #include <stdlib.h>
