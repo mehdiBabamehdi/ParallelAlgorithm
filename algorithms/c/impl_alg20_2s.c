@@ -1,9 +1,11 @@
-/*
- * @name 	alg20.c
- * @brief	The code implements Alg20 of chapter 2 of course "parallel algorithm"
- * 
- */
 
+
+/*
+ * @name 	 alg20_2c.c
+ * @brief	 The code implements Alg20 of chapter 2 of course "parallel algorithm"
+ * @author Mehdi
+ */
+ 
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
