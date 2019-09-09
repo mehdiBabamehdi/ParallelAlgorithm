@@ -1,6 +1,5 @@
-*
 !src/
 !*.c
 !*.ipynb
 !Makefile
-!.gitignore
+!**/.gitignore

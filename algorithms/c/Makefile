@@ -10,10 +10,10 @@ CLIBS=-lm
 all: $(OUTGCC) $(OUTMPICC)
 
 $(OUTGCC): $(SRCGCC)
-	gcc $(CFLAGS) $(CLIBS) $(patsubst %,%.c,$@) -o $@
+	gcc $(CFLAGS) $(patsubst %,%.c,$@) -o $@ $(CLIBS) 
 
 $(OUTMPICC): $(SRCMPICC)
-	mpicc $(CFLAGS) $(CLIBS) $(patsubst %,%.c,$@) -o $@
+	mpicc $(CFLAGS) $(patsubst %,%.c,$@) -o $@ $(CLIBS) 
 
 clean:
 	rm $(OUTGCC) $(OUTMPICC)
