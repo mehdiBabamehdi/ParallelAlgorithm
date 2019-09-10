@@ -1,19 +1,28 @@
 
 
 /*
- * @name 	alg20.c
- * @brief	The code implements Alg20 of chapter 2 of course "parallel algorithm"
- * 
+ * @name 	 alg20_2c.c
+ * @brief	 The code implements Alg20 of chapter 2 of course "parallel algorithm"
+ * @author Mehdi
  */
-
+ 
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
 
+// (possible) TODO 's:
 
-int main()
-{
+// ** add description/comments
+// ** add error check
+// ** utilities that will be also used in other implementations of algorithms,
+//    such as clock-related functions, presentation of results, etc, would be
+//    better to modularize them and put them in another file
+// ** avoid using direct user-input like scanf. Use instead input files (e.g.
+//    data.in) and read from that file
+
+void fan_in_sum_seq(){
+
    int numb_stage, array_dim;
    float *rand_numb; 
    float sum =0;  
@@ -48,5 +57,6 @@ int main()
    printf("result= %f\n", *rand_numb);
    printf("result (correct)= %f\n",sum);
    
-   return 0;
+   //return 0;
+
 }

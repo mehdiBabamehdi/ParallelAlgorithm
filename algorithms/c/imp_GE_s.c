@@ -223,10 +223,11 @@ void LU_jki_nonBlocked_pivoting(float** A, int n)
 double LU_ijk_blocked(void (*func)(float**, int), float** A, int n, int nb)
 {
     struct timespec start_t ={0,0} , end_t={0,0};
-    int N = floor(N / nb);
-float** submat = (float **) calloc(nb, sizeof(float*));
+    int N = floor(n / nb);
+    
     void (*called_func) (float**, int);
     called_func = func;
+    
     clock_gettime(CLOCK_MONOTONIC,&start_t);
     for (int k = 0; k < N; k++)
     {
@@ -236,7 +237,7 @@ float** submat = (float **) calloc(nb, sizeof(float*));
             int x = nb * k;
             int y = nb * l;
             // Create a new outer array to hold pointers to the element of each inner array
-            
+            float** submat = (float **) calloc(nb, sizeof(float*));
             for (int i = 0; i < nb; i++)
             {
                 submat[i] = A[y++] + x;
@@ -245,19 +246,11 @@ float** submat = (float **) calloc(nb, sizeof(float*));
             called_func(submat, nb);
           }
     }
-    printf("A \n");
-    for (int i = 0; i < n; ++i)
-    {
-        for (int j = 0; j < n; ++j)
-        {
-            printf("%f  ", A[i][j]);
-        }
-        printf("\n");
-    }
+    
     clock_gettime(CLOCK_MONOTONIC,&end_t);
  
-   return (((double)((end_t.tv_sec + 1.0e-9*end_t.tv_nsec) -\
-            (double)(start_t.tv_sec - 1.0e-9*start_t.tv_nsec))));
+    return (((double)((end_t.tv_sec + 1.0e-9*end_t.tv_nsec) -\
+             (double)(start_t.tv_sec - 1.0e-9*start_t.tv_nsec))));
 }
 
 
