@@ -3,7 +3,8 @@
   
   #include <stdlib.h>
   #include <stdio.h>
+  #include <time.h>
  
-  void func(float** array, int n);   
+  void matrix_gen(double** array, int m, int n);   
   
-#endif
+#endif 

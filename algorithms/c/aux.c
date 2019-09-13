@@ -1,15 +1,19 @@
+
 #include "aux.h"
 
-  void func(float** array, int n)
+  void matrix_gen(double** array, int m, int n)
   {
-      printf("A \n");
-    for (int i = 0; i < n; ++i)
+    srand(time(NULL));
+    printf("matrix %d*%d \n", m,n);
+    for (int i = 0; i < m; ++i)
     {
+        printf("\t");
         for (int j = 0; j < n; ++j)
         {
-            array[i][j] = (float) (rand() % 100);
+            array[i][j] = (double) (rand() % 100);
             printf("%f  ", array[i][j]);
         }
         printf("\n");
     }
-  }
+    printf("\n");
+}
