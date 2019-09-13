@@ -8,7 +8,7 @@ int main()
 {
     int n = 8;
     int nb = 4;
-    float** A;
+    double** A;
 
     /* allocate the array */
     A = malloc(n * sizeof * A);
@@ -17,16 +17,16 @@ int main()
         A[i] = malloc(n * sizeof *A[i]);
     }
 
-    /* use the array */
-    func(A, n);
+    matrix_gen(A, n, n);
 
     printf ("time of operation = %lf \n", LU_ijk_blocked((*LU_kij_nonBlocked), A, n,nb));
     printf("A \n");
     for (int i = 0; i < n; ++i)
     {
+        printf("\t");
         for (int j = 0; j < n; ++j)
         {
-            printf("%f  ", A[i][j]);
+            printf("%lf  ", A[i][j]);
         }
         printf("\n");
     }
