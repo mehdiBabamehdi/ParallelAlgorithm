@@ -5,12 +5,12 @@
 
 double error_cal(double** A, double** x, double** b, int n)
 {
-  //int n = sizeof(A[0]) / sizeof(A[0][0]);
   double error = 0;
   double s = 0;
   
   for (int i = 0; i < n; ++i)
   {
+    s = 0;
     for (int j = 0; j < n; ++j)
     {
       s = s + A[i][j] * x[j][1];
@@ -20,7 +20,6 @@ double error_cal(double** A, double** x, double** b, int n)
   }
         
   error = sqrt(error);
-
   return error;
 }
 
@@ -31,34 +30,70 @@ double jacobi_serial(double** A, double** x, double** b, int n, double tol)
     double error = 10;
     double s;
     
-    //int n = sizeof(A[0]) / sizeof(A[0][0]);
-    printf("%d =\n", n);
-    while ((error >= tol) | (count < 1e2))
+    while ((error >= tol))
     {        
         for (int i = 0; i < n; ++i)
         {
+          s = 0;
             for (int j = 0; j < n; ++j)
             {
                 if(i != j)
                 {
-                    s = A[i][j] * x[j][1];
+                    s = s + A[i][j] * x[j][1];
                 }
             }
             x[i][1] = (b[i][1] - s) / A[i][i];
         }
        error = error_cal(A,x,b,n);      
        count+=1; 
+       if(count > 1e2) break;
     }
     
-    printf("x=\n  ");
+    return error;
+}
+
+
+double SOR_serial(double** A, double** x, double** b, double omega, int n, double tol)
+{
+    int count = 0;
+    double error = 10;
+    double s;
+    double** x_old;
+    
+    x_old = malloc(n * sizeof * x_old);
     for (int i = 0; i < n; ++i)
     {
-        printf("\t");
-        printf("%lf  \n", x[i][1]);
+        x_old[i] = malloc(1 * sizeof *x_old[i]);
     }
-    printf("\n");
     
-    printf("error = %lf\n", error);
+    while ((error >= tol) | (count < 1e2))
+    {     
+        
+        for (int i = 0; i < n; ++i)
+        {
+          s = 0;
+            for (int j = 0; j < n; ++j)
+            {
+                if (j < i)
+                    s = s + A[i][j] * x[j][1];
+                if (j > i)
+                    s = s + A[i][j] * x_old[j][1];
+            }
+            x_old[i][1] = x[i][1];
+            x[i][1] = omega* (b[i][1] - s) / A[i][i] + (1.0 - omega) * x_old[i][1];
+        }
+       error = error_cal(A,x,b,n);      
+       count+=1; 
+    }
+    
+    // free memory
+    for (int i=0; i<10; ++i) 
+    {
+        free(x_old[i]);
+    }
+    
+    free(x_old);
+    
     return error;
 }
 

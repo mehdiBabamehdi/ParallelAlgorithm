@@ -5,7 +5,7 @@
 
 int main()
 {
-    int n = 8;
+    int n = 16;
     int nb = 4;
     double** A;
     double** b;
@@ -26,7 +26,7 @@ int main()
     {
         b[i] = malloc(1 * sizeof *b[i]);
     }
-    matrix_gen(b,n,1);
+   vector_gen(b,n);
     
     x = malloc(n * sizeof * x);
     for (int i = 0; i < n; ++i)
@@ -40,7 +40,17 @@ int main()
     }
     
     error = jacobi_serial(A, x, b, n,1e-6);
-      printf("error = %lf\n", error);
+    printf("error = %lf\n", error);
+    printf("x=\n  ");
+    for (int i = 0; i < n; ++i)
+    {
+        printf("\t");
+        printf("%lf  \n", x[i][1]);
+    }
+    printf("\n");
+    
+     error = SOR_serial(A, x, b, 0.9, n, 1e-6);
+    printf("error = %lf\n", error);
     printf("x=\n  ");
     for (int i = 0; i < n; ++i)
     {
