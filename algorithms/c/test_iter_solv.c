@@ -39,24 +39,23 @@ int main()
         x[i][1] = 1.0;
     }
     
-    error = jacobi_serial(A, x, b, n,1e-6);
-    printf("error = %lf\n", error);
+    jacobi_serial(A, x, b, n,1e-10);
     printf("x=\n  ");
     for (int i = 0; i < n; ++i)
     {
-        printf("\t");
-        printf("%lf  \n", x[i][1]);
+        printf("\t| ");
+        printf("%lf | \n", x[i][1]);
+        x[i][1] = 0.0;
     }
     printf("\n");
     
-     error = SOR_serial(A, x, b, 0.9, n, 1e-6);
-    printf("error = %lf\n", error);
+    SOR_serial(A, x, b, 0.9, n, 1e-10);
     printf("x=\n  ");
     for (int i = 0; i < n; ++i)
     {
-        printf("\t");
-        printf("%lf  \n", x[i][1]);
+        printf("\t|");
+        printf("%lf | \n", x[i][1]);
     }
     printf("\n");
-    
+     
 }

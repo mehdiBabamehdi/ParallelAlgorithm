@@ -24,14 +24,27 @@ double error_cal(double** A, double** x, double** b, int n)
 }
 
 
-double jacobi_serial(double** A, double** x, double** b, int n, double tol)
+void jacobi_serial(double** A, double** x, double** b, int n, double tol)
 {
     int count = 0;
     double error = 10;
     double s;
+    double** x_old;
     
+    x_old = malloc(n * sizeof * x_old);
+    for (int i = 0; i < n; ++i)
+    {
+        x_old[i] = malloc(1 * sizeof *x_old[i]);
+    }
+   
     while ((error >= tol))
-    {        
+    {   
+              
+        for (int i = 0; i < n; ++i)
+        {
+            x_old[i][1] = x[i][1];
+        }    
+
         for (int i = 0; i < n; ++i)
         {
           s = 0;
@@ -39,21 +52,20 @@ double jacobi_serial(double** A, double** x, double** b, int n, double tol)
             {
                 if(i != j)
                 {
-                    s = s + A[i][j] * x[j][1];
+                    s = s + A[i][j] * x_old[j][1];
                 }
             }
             x[i][1] = (b[i][1] - s) / A[i][i];
         }
        error = error_cal(A,x,b,n);      
        count+=1; 
-       if(count > 1e2) break;
+       if(count > 1e3) break;
     }
-    
-    return error;
+    printf("Jacobi: count= %d  error= %e\n", count, error);
 }
 
 
-double SOR_serial(double** A, double** x, double** b, double omega, int n, double tol)
+void SOR_serial(double** A, double** x, double** b, double omega, int n, double tol)
 {
     int count = 0;
     double error = 10;
@@ -66,7 +78,7 @@ double SOR_serial(double** A, double** x, double** b, double omega, int n, doubl
         x_old[i] = malloc(1 * sizeof *x_old[i]);
     }
     
-    while ((error >= tol) | (count < 1e2))
+    while ((error >= tol))
     {     
         
         for (int i = 0; i < n; ++i)
@@ -74,16 +86,15 @@ double SOR_serial(double** A, double** x, double** b, double omega, int n, doubl
           s = 0;
             for (int j = 0; j < n; ++j)
             {
-                if (j < i)
+                if (i != j)
                     s = s + A[i][j] * x[j][1];
-                if (j > i)
-                    s = s + A[i][j] * x_old[j][1];
             }
             x_old[i][1] = x[i][1];
             x[i][1] = omega* (b[i][1] - s) / A[i][i] + (1.0 - omega) * x_old[i][1];
         }
        error = error_cal(A,x,b,n);      
        count+=1; 
+       if(count > 1e3) break;
     }
     
     // free memory
@@ -94,10 +105,10 @@ double SOR_serial(double** A, double** x, double** b, double omega, int n, doubl
     
     free(x_old);
     
-    return error;
+    printf("SOR: count= %d  error= %e\n", count, error);
 }
 
-double jacobi_par(double** A, double** x, double** b, int n, int nb, double tol)
+void jacobi_par(double** A, double** x, double** b, int n, int nb, double tol)
 {
 
 
