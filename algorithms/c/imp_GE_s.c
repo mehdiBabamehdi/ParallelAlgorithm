@@ -6,11 +6,11 @@
 // and call the desired function and calculate time of operation
 // to call the function:
 //      func_handler((<pointer to the function>),<argument>)
-//      e.g. func_handler((*LU_kij_nonBlocked),(float**)A)
-double func_handler(void (*func)(float**, int), float** A, int n)
+//      e.g. func_handler((*LU_kij_nonBlocked),(double**)A)
+double func_handler(void (*func)(double**, int), double** A, int n)
 {
    struct timespec start_t ={0,0} , end_t={0,0};
-   void (*called_func) (float**, int);
+   void (*called_func) (double**, int);
 
    clock_gettime(CLOCK_MONOTONIC,&start_t);
    called_func = func;
@@ -23,7 +23,7 @@ double func_handler(void (*func)(float**, int), float** A, int n)
 
 
 // non-blocked KIJ form of GE without column pivoting 
-void LU_kij_nonBlocked(float** A, int n)
+void LU_kij_nonBlocked(double** A, int n)
 {
     for (int k = 0; k < n; ++k)
     {       
@@ -40,7 +40,7 @@ void LU_kij_nonBlocked(float** A, int n)
 
 
 // non-blocked KJI form of GE without column pivoting 
-void LU_kji_nonBlocked(float** A, int n)
+void LU_kji_nonBlocked(double** A, int n)
 {
     for (int k = 0; k < n; ++k)
     {
@@ -62,7 +62,7 @@ void LU_kji_nonBlocked(float** A, int n)
 
 
 // non_blocked JKI form of GE without column pivoting 
-void LU_jki_nonBlocked(float** A, int n)
+void LU_jki_nonBlocked(double** A, int n)
 {
     // apply earlier transformation of column j
     for (int j = 0; j < n; ++j)
@@ -93,7 +93,7 @@ void LU_jki_nonBlocked(float** A, int n)
 
 
 // non-blocked KIJ form of GE with column pivoting 
-void LU_kij_nonBlocked_pivoting(float** A, int n)
+void LU_kij_nonBlocked_pivoting(double** A, int n)
 {
     int max;
     int* p = (int*) malloc(n * sizeof(int)); // array used for permutaion of rows in pivoting
@@ -124,7 +124,7 @@ void LU_kij_nonBlocked_pivoting(float** A, int n)
 
 
 // non-blocked KJI form of GE with column pivoting 
-void LU_kji_nonBlocked_pivoting(float** A, int n)
+void LU_kji_nonBlocked_pivoting(double** A, int n)
 {
     int max;
     int* p = (int*) malloc(n * sizeof(int)); // array used for permutaion of rows in pivoting
@@ -168,7 +168,7 @@ void LU_kji_nonBlocked_pivoting(float** A, int n)
 
 
 // non_blocked JKI form of GE with column pivoting 
-void LU_jki_nonBlocked_pivoting(float** A, int n)
+void LU_jki_nonBlocked_pivoting(double** A, int n)
 {
     int max;
     int* p = (int*) malloc(n * sizeof(int)); // array used for permutaion of rows in pivoting
@@ -220,12 +220,12 @@ void LU_jki_nonBlocked_pivoting(float** A, int n)
 
 
 // blocked form of GE with column pivoting for given of nonblocked GE
-double LU_ijk_blocked(void (*func)(float**, int), float** A, int n, int nb)
+double LU_ijk_blocked(void (*func)(double**, int), double** A, int n, int nb)
 {
     struct timespec start_t ={0,0} , end_t={0,0};
     int N = floor(n / nb);
     
-    void (*called_func) (float**, int);
+    void (*called_func) (double**, int);
     called_func = func;
     
     clock_gettime(CLOCK_MONOTONIC,&start_t);
@@ -237,7 +237,7 @@ double LU_ijk_blocked(void (*func)(float**, int), float** A, int n, int nb)
             int x = nb * k;
             int y = nb * l;
             // Create a new outer array to hold pointers to the element of each inner array
-            float** submat = (float **) calloc(nb, sizeof(float*));
+            double** submat = (double **) calloc(nb, sizeof(double*));
             for (int i = 0; i < nb; i++)
             {
                 submat[i] = A[y++] + x;
@@ -253,4 +253,10 @@ double LU_ijk_blocked(void (*func)(float**, int), float** A, int n, int nb)
              (double)(start_t.tv_sec - 1.0e-9*start_t.tv_nsec))));
 }
 
+
+// blocked form of GE with column pivoting for given of nonblocked GE using CBLAS lib
+double LU_ijk_blocked_BLAS(void (*func)(double**, int), double** A, int n, int nb)
+{
+    
+}
 

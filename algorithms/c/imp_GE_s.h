@@ -5,15 +5,17 @@
   #include <stdio.h>
   #include <math.h>
   #include <time.h>
+  #include <cblas.h>
  
-  void func(float** array, int n);
-  void LU_kij_nonBlocked(float** , int);
-  void LU_kji_nonBlocked(float** , int);  
-  void LU_jki_nonBlocked(float** , int); 
-  void LU_kij_nonBlocked_pivoting(float** , int);
-  void LU_kji_nonBlocked_pivoting(float** , int);
-  void LU_jki_nonBlocked_pivoting(float** , int);
-  double func_handler(void (*)(float**, int), float** , int);
-  double LU_ijk_blocked(void (*)(float**, int), float** , int, int);
+  void func(double** array, int n);
+  void LU_kij_nonBlocked(double** , int);
+  void LU_kji_nonBlocked(double** , int);  
+  void LU_jki_nonBlocked(double** , int); 
+  void LU_kij_nonBlocked_pivoting(double** , int);
+  void LU_kji_nonBlocked_pivoting(double** , int);
+  void LU_jki_nonBlocked_pivoting(double** , int);
+  double func_handler(void (*)(double**, int), double** , int);
+  double LU_ijk_blocked(void (*)(double**, int), double** , int, int);
+  double LU_ijk_blocked_BLAS(void (*func)(double**, int), double** , int , int );
   
 #endif
